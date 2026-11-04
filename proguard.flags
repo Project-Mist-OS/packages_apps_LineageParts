@@ -19,6 +19,12 @@
 -keep class org.lineageos.lineageparts.profiles.*
 -keep class org.lineageos.lineageparts.sounds.*
 
+# SettingsLib's switch thumb icon is only referenced from a <drawable class="..."> tag in
+# settingslib_expressive_switch_thumb_icon.xml, which R8 does not treat as a keep root.
+# Without this, MainSwitchBar inflation crashes with ClassNotFoundException.
+-keep class com.android.settingslib.widget.SwitchThumbIconDrawable { *; }
+-keep class com.android.settingslib.widget.SwitchThumbIconStore { *; }
+
 # Keep keyhandler constructor
 -keep public class * implements com.android.internal.os.DeviceKeyHandler {
    public <init>(android.content.Context);
